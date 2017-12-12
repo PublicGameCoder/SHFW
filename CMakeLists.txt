@@ -11,18 +11,13 @@ add_subdirectory (extLibs)
 include_directories(
 	${CMAKE_SOURCE_DIR}/extLibs/glfw-3.2.1/include/GLFW
 	${CMAKE_SOURCE_DIR}/extLibs/glm-0.9.8.4
-	${CMAKE_SOURCE_DIR}/extLibs/glew-2.1.0/include
 	${CMAKE_SOURCE_DIR}/extLibs
-	${CMAKE_SOURCE_DIR}/SHFW/assets
 	${CMAKE_SOURCE_DIR}/SHFW
 	${CMAKE_SOURCE_DIR}/.
 )
 
 link_directories(
 	${CMAKE_SOURCE_DIR}/extLibs/glfw-3.2.1/src
-	${CMAKE_SOURCE_DIR}/extLibs/glew-2.1.0
-	${CMAKE_SOURCE_DIR}/extLibs
-	${CMAKE_SOURCE_DIR}/SHFW/assets
 	${CMAKE_SOURCE_DIR}/SHFW
 )
 
@@ -30,7 +25,6 @@ set(ALL_GRAPHICS_LIBS
 	${OPENGL_LIBRARY}
 	SHFW
 	glfw
-	GLEW_210
 )
 
 add_definitions(
@@ -46,11 +40,11 @@ add_definitions(
 ####################################################################
 
 add_library(SHFW
+	SHFW/SHFWConfig.h
 	SHFW/Core.cpp
 	SHFW/Core.h
 	SHFW/RenderManager.cpp
 	SHFW/RenderManager.h
-	SHFW/InputKeycodes.h
 	SHFW/InputManager.cpp
 	SHFW/InputManager.h
 	SHFW/Time.cpp
@@ -59,6 +53,22 @@ add_library(SHFW
 	SHFW/Entity.h
 	SHFW/Scene.cpp
 	SHFW/Scene.h
+	SHFW/Camera.cpp
+	SHFW/Camera.h
+	SHFW/Sprite.cpp
+	SHFW/Sprite.h
+	SHFW/ShaderManager.cpp
+	SHFW/ShaderManager.h
+	SHFW/ResourceManager.cpp
+	SHFW/ResourceManager.h
+	SHFW/Mesh.cpp
+	SHFW/Mesh.h
+	SHFW/glad.c
+)
+
+file(
+	COPY ${CMAKE_SOURCE_DIR}/SHFW/shaders
+	DESTINATION ${CMAKE_BINARY_DIR}
 )
 
 IF(MAKE_WORKSPACE)
