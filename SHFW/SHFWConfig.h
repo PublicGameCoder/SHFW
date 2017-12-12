@@ -1,0 +1,13 @@
+#ifndef SHFWCONFIG_H
+#define SHFWCONFIG_H
+
+#define SHFWTITLE "SpaceHorizons Framework"
+#define FULLSCREEN false
+#define MINWINDOWWIDTH 640
+#define MINWINDOWHEIGHT 480
+#define MAXWINDOWWIDTH GLFW_DONT_CARE
+#define MAXWINDOWHEIGHT GLFW_DONT_CARE
+
+#define VSYNC false
+
+#endif // !SHFWCONFIG_H
