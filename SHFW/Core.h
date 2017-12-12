@@ -1,10 +1,10 @@
 #ifndef CORE_H
 #define CORE_H
 
+#include "RenderManager.h"
 #include <glfw3.h>
 #include "Scene.h"
 #include "Time.h"
-#include "RenderManager.h"
 #include "InputManager.h"
 
 class Core {
@@ -16,7 +16,6 @@ public:
 
 private:
 	RenderManager renderManager;
-	void calcDeltaTime();
 };
 
 #endif // !CORE_H
