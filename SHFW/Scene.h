@@ -9,14 +9,14 @@ public:
 	Scene();
 	virtual ~Scene();
 
-	bool isRunning() { return Scene::running; };
+	bool isRunning() { return this->Scene::running; };
 
-	void setRunning(bool state) { Scene::running = state; };
+	void setRunning(bool state) { this->Scene::running = state; };
 
 	void update();
 
 private:
-	void _updateEntity(Entity* entity);
+	void updateEntity(Entity* entity);
 
 	bool running;
 };
