@@ -8,7 +8,7 @@ class Time
 public:
 	static float deltaTime() { return (float)_deltaTime; };
 	static void calcDeltaTime();
-protected:
+private:
 	static double _deltaTime;
 };
 
