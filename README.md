@@ -1,10 +1,10 @@
-![GitHub Logo](doc/logo_full.png)
+![GitHub Logo](doc/ignore/logo_full.png)
 
 # SHFW Framework
 
 
 **Contributed by:** Mike de Groot
 
-git add README.md
-git commit -m "Adjust README.md"
-git push origin master
+## Class Diagram
+
+![ClassDiagram](doc/ignore/classDiagram.png)
