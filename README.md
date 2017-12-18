@@ -1,2 +1,4 @@
-"# SHFW" 
-![picture](doc/logo_full.png)
+![picture](doc/logo_full.png) ##SHFW Framework
+
+**Contributed by:** Mike de Groot
+
