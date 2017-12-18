@@ -1,4 +1,4 @@
-![GitHub Logo](doc/logo_full.png) ##SHFW Framework##
+![GitHub Logo](doc/logo_full.png) # SHFW Framework
 
 **Contributed by:** Mike de Groot
 
