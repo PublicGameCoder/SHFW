@@ -1,21 +1,31 @@
 #ifndef CORE_H
 #define CORE_H
 
-#include "RenderManager.h"
-#include <glfw3.h>
-#include "Scene.h"
-#include "Time.h"
-#include "InputManager.h"
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
 
-class Core {
+#include "SHTime.h"
+#include "Renderer.h"
+#include "InputManager.h"
+#include "Entity.h"
+#include "Scene.h"
+
+class Core
+{
 public:
 	Core();
 	virtual ~Core();
-	
+
 	void run(Scene* scene);
 
+	void cleanup();
+
+	void showFrameRate(float numsecs);
+
 private:
-	RenderManager renderManager;
+	Renderer _renderer;
 };
 
-#endif // !CORE_H
+#endif /* CORE_H */

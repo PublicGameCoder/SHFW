@@ -1,24 +1,51 @@
 #include "Core.h"
 
-Core::Core() {
+Core::Core()
+{
 
 }
 
-Core::~Core() {
+Core::~Core()
+{
 
 }
 
-void Core::run(Scene* scene) {
-	//Calculate deltaTime variable
-	Time::calcDeltaTime();
-	//Update InputManager
-	InputManager::getManager()->update(renderManager.getCurrentWindow());
+void Core::run(Scene* scene)
+{
+	// update our Time::deltaTime
+	Time::calcDelta();
 
-	scene->update();
+	// Update Input singleton instance
+	InputManager::getManager()->update(_renderer.window());
 
-	renderManager.render(scene);
+	// Update camera instance in Scene
+	scene->camera()->updateCamera();
 
-	if (glfwWindowShouldClose(renderManager.getCurrentWindow())) {
-		scene->setRunning(false);
+	// Update Scene (and recursively all children)
+	scene->updateScene();
+
+	// Render Scene
+	_renderer.renderScene(scene);
+
+	// user clicked the 'close' button in the window
+	if (glfwWindowShouldClose(_renderer.window()) == 1) { scene->isRunning(false); }
+}
+
+void Core::showFrameRate(float numsecs)
+{
+	static int frames = 0;
+	static double time = 0;
+
+	frames++;
+	time += Time::deltaTime;
+	if (time >= numsecs) {
+		printf("%f ms/frame (%f FPS)\n", (numsecs*1000)/double(frames), frames/numsecs);
+		frames = 0;
+		time = 0;
 	}
+}
+
+void Core::cleanup()
+{
+	_renderer.cleanup();
 }
