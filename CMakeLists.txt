@@ -11,6 +11,7 @@ add_subdirectory (extLibs)
 include_directories(
 	${CMAKE_SOURCE_DIR}/extLibs/glfw-3.2.1/include/GLFW
 	${CMAKE_SOURCE_DIR}/extLibs/glm-0.9.8.4
+	${CMAKE_SOURCE_DIR}/extLibs/SOIL2/${HEADERS}
 	${CMAKE_SOURCE_DIR}/extLibs
 	${CMAKE_SOURCE_DIR}/SHFW
 	${CMAKE_SOURCE_DIR}/.
@@ -40,30 +41,51 @@ add_definitions(
 ####################################################################
 
 add_library(SHFW
-	SHFW/SHFWConfig.h
-	SHFW/Core.cpp
-	SHFW/Core.h
-	SHFW/RenderManager.cpp
-	SHFW/RenderManager.h
-	SHFW/InputManager.cpp
-	SHFW/InputManager.h
-	SHFW/Time.cpp
-	SHFW/Time.h
-	SHFW/Entity.cpp
-	SHFW/Entity.h
-	SHFW/Scene.cpp
-	SHFW/Scene.h
 	SHFW/Camera.cpp
 	SHFW/Camera.h
-	SHFW/Sprite.cpp
-	SHFW/Sprite.h
-	SHFW/ShaderManager.cpp
-	SHFW/ShaderManager.h
-	SHFW/ResourceManager.cpp
-	SHFW/ResourceManager.h
+	SHFW/Canvas.cpp
+	SHFW/Canvas.h
+	SHFW/Color.h
+	SHFW/Core.cpp
+	SHFW/Core.h
+	SHFW/Entity.cpp
+	SHFW/Entity.h
+	SHFW/InputManager.cpp
+	SHFW/InputManager.h
+	SHFW/Line.cpp
+	SHFW/Line.h
 	SHFW/Mesh.cpp
 	SHFW/Mesh.h
+	SHFW/Noise.cpp
+	SHFW/Noise.h
+	SHFW/PointT.h
+	SHFW/Renderer.cpp
+	SHFW/Renderer.h
+	SHFW/ResourceManager.cpp
+	SHFW/ResourceManager.h
+	SHFW/SHFWconfig.h
+	SHFW/Scene.cpp
+	SHFW/Scene.h
+	SHFW/Shader.cpp
+	SHFW/Shader.h
+	SHFW/Sprite.cpp
+	SHFW/Sprite.h
+	SHFW/Text.cpp
+	SHFW/Text.h
+	SHFW/Texture.cpp
+	SHFW/Texture.h
+	SHFW/Timer.cpp
+	SHFW/Timer.h
+	SHFW/Util.c
+	SHFW/Util.h
+	SHFW/SHTime.cpp
+	SHFW/SHTime.h
+	SHFW/VectorT.h
 	SHFW/glad.c
+	SHFW/StandardAssets.h
+	SHFW/SHMath.h
+	SHFW/EmptyObject.cpp
+	SHFW/EmptyObject.h
 )
 
 file(
@@ -74,6 +96,8 @@ file(
 IF(MAKE_WORKSPACE)
 	add_executable(Workspace
 		Workspace/main.cpp
+		Workspace/PreviewScene.cpp
+		Workspace/PreviewScene.h
 	)
 	target_link_libraries(Workspace
 		${ALL_GRAPHICS_LIBS}
