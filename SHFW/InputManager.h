@@ -37,7 +37,7 @@ public:
 
 private:
 	static InputManager* instance;
-	
+
 	GLFWwindow* currentWindow;
 	bool PressedKeys[GLFW_KEY_LAST];
 	bool KeysUp[GLFW_KEY_LAST];

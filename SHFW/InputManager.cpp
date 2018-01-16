@@ -46,9 +46,10 @@ void InputManager::processKey(unsigned int key) {
 	if (glfwGetKey(this->currentWindow, key) == GLFW_PRESS) {
 		if (!PressedKeys[key]) {
 			PressedKeys[key] = true;
-			KeysDown[key] = true;	
+			KeysDown[key] = true;
 			KeysUp[key] = false;
-		} else {
+		}
+		else {
 			KeysDown[key] = false;
 		}
 	}
@@ -57,7 +58,8 @@ void InputManager::processKey(unsigned int key) {
 			PressedKeys[key] = false;
 			KeysUp[key] = true;
 			KeysDown[key] = false;
-		} else {
+		}
+		else {
 			KeysUp[key] = false;
 		}
 	}
@@ -69,7 +71,8 @@ void InputManager::processButton(unsigned int button) {
 			mouse[button] = true;
 			mouseDown[button] = true;
 			mouseUp[button] = false;
-		} else {
+		}
+		else {
 			mouseDown[button] = false;
 		}
 	}
@@ -78,7 +81,8 @@ void InputManager::processButton(unsigned int button) {
 			mouse[button] = false;
 			mouseUp[button] = true;
 			mouseDown[button] = false;
-		} else {
+		}
+		else {
 			mouseUp[button] = false;
 		}
 	}

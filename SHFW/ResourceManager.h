@@ -1,25 +1,48 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
-#include <string>
 #include <iostream>
-#include <fstream>
-#include <Windows.h>
+#include <string>
 #include <map>
-#include <vector>
+
+// Include GLAD
+#include <glad\glad.h>
+
+// Include GLFW
+#include <glfw3.h>
+
+#include "SHFWConfig.h"
+#include "Shader.h"
+#include "Texture.h"
+#include "Mesh.h"
 
 class ResourceManager
 {
 public:
-	~ResourceManager();
-	static ResourceManager* getManager() { if (!instance) { instance = new ResourceManager();} return instance;}
-	std::vector<const char*> loadAllShaders(std::string folder_directory);
-private:
-	static ResourceManager* instance;
 	ResourceManager();
-	std::map<std::string, const char*> loadedShaders;
+	virtual ~ResourceManager();
 
-	std::vector<std::string> ResourceManager::getAllFilesFromFolder(std::string folder);
+	Texture* getTexture(const std::string& filename, int filter, int wrap);
+
+	Mesh* getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight, int circle, int which);
+
+	Mesh* getLineMesh(Line* line);
+
+	Shader* getShader(const std::string& vs, const std::string& fs);
+
+	void cleanup();
+
+private:
+
+	void deleteTexture(const std::string& filename);
+
+	void deleteMesh(const std::string& meshname);
+
+	void deleteShader(const std::string& shadername);
+
+	std::map<std::string, Texture*> _textures;
+	std::map<std::string, Mesh*> _meshes;
+	std::map<std::string, Shader*> _shaders;
 };
 
-#endif // !RESOURCEMANAGER_H
+#endif /* RESOURCEMANAGER_H */

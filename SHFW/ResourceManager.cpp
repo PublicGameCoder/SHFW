@@ -1,46 +1,162 @@
 #include "ResourceManager.h"
 
-ResourceManager::ResourceManager() {
-	
-}
-
-ResourceManager::~ResourceManager() {
+ResourceManager::ResourceManager()
+{
 
 }
 
-std::vector<const char*> ResourceManager::loadAllShaders(std::string folder_directory) {
-	std::vector<std::string> allFiles = getAllFilesFromFolder(folder_directory);
-	for each (std::string file in allFiles) {
-		if (loadedShaders.find(file) != loadedShaders.end()) continue;
-		std::string line, text;
-		std::ifstream in(file);
-		while (std::getline(in, line))
-		{
-			text += line + "\n";
+ResourceManager::~ResourceManager()
+{
+	// delete shaders only in destructor. There might be an ubershader.
+	// shaders
+	std::map<std::string, Shader*>::iterator shad_it;
+	for (shad_it=_shaders.begin(); shad_it!=_shaders.end(); ++shad_it) {
+		if (shad_it->second != NULL) {
+			//std::cout << shad_it->first << " => " << shad_it->second << '\n';
+			deleteShader(shad_it->first);
 		}
-		loadedShaders.insert(std::pair<std::string, const char*>(file,text.c_str()));
 	}
-	std::vector<const char*> shaders;
-	std::map<std::string, const char*>::iterator it;
-	for (it = loadedShaders.begin();it != loadedShaders.end(); ++it)
-	{
-		shaders.push_back(it->second);
-	}
-	return shaders;
+	_shaders.clear();
+
+	// cleanup Textures and Meshes
+	this->cleanup();
 }
 
-std::vector<std::string> ResourceManager::getAllFilesFromFolder(std::string folder) {
-	std::vector<std::string> names;
-	std::string search_path = folder + "/*.*";
-	WIN32_FIND_DATA fd;
-	HANDLE hFind = ::FindFirstFile(search_path.c_str(), &fd);
-	if (hFind != INVALID_HANDLE_VALUE) {
-		do {
-			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
-				names.push_back(folder+"/"+fd.cFileName);
-			}
-		} while (::FindNextFile(hFind, &fd));
-		::FindClose(hFind);
+void ResourceManager::cleanup()
+{
+	// textures
+	std::map<std::string, Texture*>::iterator text_it;
+	for (text_it=_textures.begin(); text_it!=_textures.end(); ++text_it) {
+		if (text_it->second != NULL) {
+			//std::cout << text_it->first << " => " << text_it->second << '\n';
+			this->deleteTexture(text_it->first);
+		}
 	}
-	return names;
+	_textures.clear();
+
+	// meshes
+	std::map<std::string, Mesh*>::iterator mesh_it;
+	for (mesh_it=_meshes.begin(); mesh_it!=_meshes.end(); ++mesh_it) {
+		if (mesh_it->second != NULL) {
+			//std::cout << mesh_it->first << " => " << mesh_it->second << '\n';
+			this->deleteMesh(mesh_it->first);
+		}
+	}
+	_meshes.clear();
+}
+
+// Texture
+Texture* ResourceManager::getTexture(const std::string& filename, int filter, int wrap)
+{
+	if (_textures[filename] != NULL) {
+		//std::cout << "return existing resource: " << filename << " (texture)" << std::endl;
+		return _textures[filename];
+	} else {
+		Texture* t = new Texture();
+		if (filename == AUTOGENWHITE) {
+			t->createWhitePixels(32, 32);
+		} else {
+			t->loadTGAImage(_prefix+filename, filter, wrap);
+		}
+		_textures[filename] = t;
+		return t;
+	}
+
+	return NULL;
+}
+
+void ResourceManager::deleteTexture(const std::string& filename)
+{
+	delete _textures[filename];
+	_textures[filename] = NULL;
+
+}
+
+// Shaders
+Shader* ResourceManager::getShader(const std::string& vs, const std::string& fs)
+{
+	std::string filename;
+	filename = vs;
+	std::string tmp("_");
+	filename.append(tmp);
+	filename.append(fs);
+	if (_shaders[filename] != NULL) {
+		//std::cout << "return existing resource: " << filename << " (shader)" << std::endl;
+		return _shaders[filename];
+	} else {
+		Shader* s = new Shader();
+		std::string fss = _prefix;
+		fss.append(fs);
+		std::string vss = _prefix;
+		vss.append(vs);
+		s->loadShaders(vss.c_str(), fss.c_str());
+		_shaders[filename] = s;
+
+		return s;
+	}
+
+	return NULL;
+}
+
+void ResourceManager::deleteShader(const std::string& shadername)
+{
+	std::string filename = _prefix;
+	filename.append(shadername);
+
+	delete _shaders[filename];
+	_shaders[filename] = NULL;
+
+}
+
+
+// Meshes
+Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight, int circle, int which)
+{
+	char buf[64]; // should be big enough: "1024x1024_0.50000x0.50000_1.00000x1.00000_0_60"
+	//sprintf(buf, "%dx%d_%.5fx%.5f_%.5fx%.5f_%d_%d", width, height, pivotx, pivoty, uvwidth, uvheight, circle, which);
+	std::string meshname(buf);
+
+	if (_meshes[meshname] != NULL) {
+		return _meshes[meshname];
+	} else {
+		Mesh* m = new Mesh();
+		if (circle != 0) {
+			if (which >= 0) {
+				m->generateSegmentMesh(width/2, circle, which);
+			} else {
+				m->generateCircleMesh(width/2, circle, uvwidth, uvheight);
+			}
+		} else {
+			m->generateSpriteMesh(width, height, pivotx, pivoty, uvwidth, uvheight);
+		}
+		_meshes[meshname] = m;
+
+		return m;
+	}
+
+	return NULL;
+}
+
+
+Mesh* ResourceManager::getLineMesh(Line* line)
+{
+	std::string meshname = line->filename();
+
+	if (_meshes[meshname] != NULL) {
+		return _meshes[meshname];
+	} else {
+		Mesh* m = new Mesh();
+		m->generateLineMesh(line);
+		_meshes[meshname] = m;
+
+		return m;
+	}
+
+	return NULL;
+}
+
+void ResourceManager::deleteMesh(const std::string& meshname)
+{
+	delete _meshes[meshname];
+	_meshes[meshname] = NULL;
 }

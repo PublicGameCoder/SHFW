@@ -2,23 +2,27 @@
 #define SCENE_H
 
 #include "Entity.h"
+#include "Camera.h"
 
-class Scene : public Entity
+class Scene: public Entity
 {
 public:
 	Scene();
 	virtual ~Scene();
 
-	bool isRunning() { return this->Scene::running; };
+	bool isRunning() { return _isRunning; };
+	void isRunning(bool newState) { _isRunning = newState; };
 
-	void setRunning(bool state) { this->Scene::running = state; };
+	Camera* camera() { return _camera; };
 
-	void update();
+	void updateScene();
 
 private:
-	void updateEntity(Entity* entity);
+	void _updateEntity(Entity* entity);
 
-	bool running;
+	Camera* _camera;
+
+	bool _isRunning;
 };
 
-#endif // !SCENE_H
+#endif /* SCENE_H */

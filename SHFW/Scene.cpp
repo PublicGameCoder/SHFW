@@ -1,27 +1,40 @@
 #include "Scene.h"
 
-Scene::Scene(): Entity() {
-	this->setRunning(true);
-	//this->addSprite("assets/lilypad.tga");
+Scene::Scene() : Entity()
+{
+	_camera = new Camera();
+
+	_isRunning = true;
 }
 
-Scene::~Scene() {
-	this->setRunning(false);
+Scene::~Scene()
+{
+	delete _camera;
 }
 
-void Scene::update() {
-	if (input()->getKey(KeyCode::Esc)) {
-		this->setRunning(false);
-		std::cout << "Terminating.." << std::endl;
+void Scene::updateScene()
+{
+	this->_updateEntity(this);
+
+	//check for closing framework
+	if (input()->getKeyDown(KeyCode::Esc)) {
+		std::cout << "terminating..." << std::endl;
+		this->isRunning(false);
 	}
 }
 
-void Scene::updateEntity(Entity* entity)
+
+void Scene::_updateEntity(Entity* entity)
 {
+	// update entity
 	entity->update();
 
-	std::vector<Entity*> childs = entity->getChilds();
-	for each (Entity* child in childs) {
-		child->update();
+	// update all children
+	std::vector<Entity*> children = entity->children();
+	std::vector<Entity*>::iterator child = children.begin();
+
+	while (child < children.end()) {
+		this->_updateEntity(*child);
+		++child;
 	}
 }
