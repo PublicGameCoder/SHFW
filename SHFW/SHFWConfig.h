@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#define USE3D true
 #define SHFWTITLE "SpaceHorizons Framework"
 #define FULLSCREEN false
 #define MINWINDOWWIDTH 640
