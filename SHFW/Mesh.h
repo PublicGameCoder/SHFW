@@ -3,6 +3,7 @@
 
 #include "Line.h"
 #include "VectorT.h"
+#include "SHFWConfig.h"
 
 // Include GLAD
 #include <glad\glad.h>
@@ -28,10 +29,17 @@ public:
 
 	void generateSegmentMesh(int radius, int segments, int which);
 
+	void generateCubeMesh(
+		int width, int height, int depth,
+		float pivotx, float pivoty, float pivotz,
+		float uvwidth, float uvheight
+	);
+
 	unsigned int numverts() { return _numverts; };
 
 private:
 	GLuint _vertexbuffer;
+	GLuint _normalbuffer;
 	GLuint _uvbuffer;
 
 	unsigned int _numverts;

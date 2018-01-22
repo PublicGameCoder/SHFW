@@ -4,7 +4,7 @@
 Mesh::Mesh()
 {
 	_vertexbuffer = 0;
-	//_normalbuffer = 0;
+	_normalbuffer = 0;
 	_uvbuffer = 0;
 
 	_numverts = 0;
@@ -14,11 +14,12 @@ Mesh::~Mesh()
 {
 	if (_vertexbuffer != 0) {
 		glDeleteBuffers(1, &_vertexbuffer);
-	//	glDeleteBuffers(1, &_normalbuffer);
+		glDeleteBuffers(1, &_normalbuffer);
 		glDeleteBuffers(1, &_uvbuffer);
 	}
 }
 
+//2D
 void Mesh::generateSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight)
 {
 	// Our vertices. Tree consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
@@ -124,7 +125,134 @@ void Mesh::generateCircleMesh(int radius, int segments, float uvwidth, float uvh
 
 	this->generateBuffers(vertices, uvs);
 }
+//3D
+void Mesh::generateCubeMesh(int width, int height, int depth, float pivotx, float pivoty, float pivotz, float uvwidth, float uvheight)
+{
+	// Our vertices. Tree consecutive floats give a 3D vertex; Three consecutive vertices give a triangle.
+	// A sprite has 1 face (quad) with 2 triangles each, so this makes 1*2=2 triangles, and 2*3 vertices
+	// A cube has 6 faces (quad) so we times the amount of vertices with the amount of faces (6*6 = 36)
+	_numverts = 36;
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec2> uvs;
 
+	float halfWidth = width * pivotx;
+	float halfheight = height * pivoty;
+	float halfdepth = depth * pivotz;
+
+	// first triangle (front)
+	vertices.push_back(glm::vec3(halfWidth, halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, -halfdepth));
+	// second triangle (front)
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, halfheight, -halfdepth));
+
+	// first triangle (right)
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, halfdepth));
+	// second triangle (right)
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, -halfdepth));
+
+	// first triangle (back)
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, halfdepth));
+	// second triangle (back)
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, halfheight, halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, halfdepth));
+
+	// first triangle (right)
+	vertices.push_back(glm::vec3(halfWidth, halfheight, halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, -halfdepth));
+	// second triangle (right)
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, halfheight, halfdepth));
+
+	// first triangle (top)
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, halfheight, halfdepth));
+	// second triangle (top)
+	vertices.push_back(glm::vec3(halfWidth, halfheight, halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, halfheight, -halfdepth));
+
+	// first triangle (down)
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, -halfdepth));
+	// second triangle (down)
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, -halfdepth));
+	vertices.push_back(glm::vec3(halfWidth, -halfheight, halfdepth));
+	vertices.push_back(glm::vec3(-halfWidth, -halfheight, halfdepth));
+
+	// UV coordinates for each vertex.
+	// uvs for first triangle (front)
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+	uvs.push_back(glm::vec2(0.0f, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	// uvs for second triangle (front)
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, uvheight));
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+
+	// uvs for first triangle (right)
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+	uvs.push_back(glm::vec2(0.0f, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	// uvs for second triangle (right)
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, uvheight));
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+
+	// uvs for first triangle (back)
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+	uvs.push_back(glm::vec2(0.0f, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	// uvs for second triangle (back)
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, uvheight));
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+
+	// uvs for first triangle (left)
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+	uvs.push_back(glm::vec2(0.0f, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	// uvs for second triangle (left)
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, uvheight));
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+
+	// uvs for first triangle (top)
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+	uvs.push_back(glm::vec2(0.0f, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	// uvs for second triangle (top)
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, uvheight));
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+
+	// uvs for first triangle (down)
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+	uvs.push_back(glm::vec2(0.0f, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	// uvs for second triangle (down)
+	uvs.push_back(glm::vec2(uvwidth, 0.0f));
+	uvs.push_back(glm::vec2(uvwidth, uvheight));
+	uvs.push_back(glm::vec2(0.0f, uvheight));
+
+	this->generateBuffers(vertices, uvs);
+}
+
+
+//Global
 void Mesh::generateSegmentMesh(int radius, int segments, int which)
 {
 	_numverts = 3;
@@ -177,9 +305,11 @@ void Mesh::generateBuffers(std::vector<glm::vec3>& vertex, std::vector<glm::vec2
 	glBufferData(GL_ARRAY_BUFFER, vertex.size() * sizeof(glm::vec3), &vertex[0], GL_STATIC_DRAW);
 
 	//create GLuint _normalbuffer;
-	//glGenBuffers(1, &_normalbuffer);
-	//glBindBuffer(GL_ARRAY_BUFFER, _normalbuffer);
-	//glBufferData(GL_ARRAY_BUFFER, normal.size() * sizeof(glm::vec3), &normal[0], GL_STATIC_DRAW);
+	if (USE3D) {
+		//glGenBuffers(1, &_normalbuffer);
+		//glBindBuffer(GL_ARRAY_BUFFER, _normalbuffer);
+		//glBufferData(GL_ARRAY_BUFFER, normal.size() * sizeof(glm::vec3), &normal[0], GL_STATIC_DRAW);
+	}
 
 	//create GLuint _uvbuffer;
 	glGenBuffers(1, &_uvbuffer);
