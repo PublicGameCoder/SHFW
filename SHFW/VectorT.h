@@ -611,7 +611,7 @@ void VectorX_t<T>::limit(T amount)
 template <class T>
 const T VectorX_t<T>::distance(VectorX_t<T> other) const
 {
-	return sqrtf(distSquared()) - other.sqrtf(distSquared());
+	return sqrtf(distSquared()) - sqrtf(other.distSquared());
 }
 
 template <class T>
