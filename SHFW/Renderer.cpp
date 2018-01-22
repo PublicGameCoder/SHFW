@@ -76,7 +76,6 @@ int Renderer::init()
 	// MS Windows only
 	//glfwSetCursorPos(_window, SWIDTH/2, SHEIGHT/2);
 
-	// Black background
 	glClearColor(CLEARCOLOR_RED, CLEARCOLOR_GREEN, CLEARCOLOR_BLUE, 1.0f);
 
 	// Orthographic camera. We don't need these.
@@ -85,8 +84,10 @@ int Renderer::init()
 	// Accept fragment if it closer to the camera than the former one
 	//glDepthFunc(GL_LESS);
 
-	// Cull triangles which normal is not towards the camera
-	//glEnable(GL_CULL_FACE);
+	if (USE3D) {
+		// Cull triangles which normal is not towards the camera
+		glEnable(GL_CULL_FACE);
+	}
 
 	_defaultShader =_resman.getShader(DEFAULTVERTEXSHADERPATH, DEFAULTFRAGMENTSHADERPATH);
 
@@ -317,9 +318,13 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 
 	if (sprite->size.x == 0) { sprite->size.x = texture->width() * sprite->uvdim.x; }
 	if (sprite->size.y == 0) { sprite->size.y = texture->height() * sprite->uvdim.y; }
-
-	Mesh* mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y, sprite->getCircleMesh(), sprite->isWhich());
-
+	Mesh* mesh = NULL;
+	if (USE3D) {
+		mesh = _resman.getCubeMesh(sprite->size.x, sprite->size.y, sprite->size.x, sprite->pivot.x, sprite->pivot.y, sprite->pivot.x, sprite->uvdim.x, sprite->uvdim.y, sprite->getCircleMesh(), sprite->isWhich());
+	}
+	else {
+		mesh = _resman.getSpriteMesh(sprite->size.x, sprite->size.y, sprite->pivot.x, sprite->pivot.y, sprite->uvdim.x, sprite->uvdim.y, sprite->getCircleMesh(), sprite->isWhich());
+	}
 	RGBAColor blendcolor = MAGENTA;
 	if (texture->warranty()) {
 		blendcolor = sprite->color;
@@ -339,6 +344,7 @@ void Renderer::_renderSprite(const glm::mat4 modelMatrix, Sprite* sprite, bool d
 		// Bind the texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0 + 0);
 		glBindTexture(GL_TEXTURE_2D, texture->getGLTexture());
+		
 		//glUniform1i(shader->textureID(), 0);
 	}
 
