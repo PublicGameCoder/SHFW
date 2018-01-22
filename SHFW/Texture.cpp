@@ -126,7 +126,7 @@ int Texture::writeTGAImage()
 	time_t t = time(NULL);
 
 	std::stringstream filename;
-	filename << "rt2d_" << t << "_" << id << ".tga";
+	filename << "shfw_" << t << "_" << id << ".tga";
 	id++;
 
 	FILE *fp = fopen(filename.str().c_str(), "w");
@@ -223,6 +223,73 @@ void Texture::createFromBuffer(PixelBuffer* pixels, int dim)
 	// generate a number of texturenames (just 1 for now)
 	glGenTextures(1, this->_gltexture);
 
+	/*
+	if (dim == 3) {
+		// setup first texture (the only one in this case)
+		// if you created more, use this->_gltexture[x], where x is the id of the texturename.
+		glBindTexture(GL_TEXTURE_3D, this->_gltexture[0]);
+		//glEnable(GL_TEXTURE_3D);
+
+		// handle transparency
+		if (this->_depth == 4) {
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glEnable(GL_BLEND);
+			glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, this->_width, this->_height, this->_depth, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels->data);
+		}
+		if (this->_depth == 3) {
+			glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, this->_width, this->_height, this->_depth, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels->data);
+		}
+		if (this->_depth == 1) {
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glEnable(GL_BLEND);
+			glTexImage3D(GL_TEXTURE_3D, 0, GL_RGBA, this->_width, this->_height, this->_depth, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels->data);
+		}
+
+		// 0 = GL_REPEAT
+		// 1 = GL_MIRRORED_REPEAT
+		// 2 = GL_CLAMP_TO_EDGE
+		if (pixels->wrap == 0) {
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_REPEAT);
+		}
+		else if (pixels->wrap == 1) {
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
+		}
+		else if (pixels->wrap == 2) {
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		}
+
+		// filter the Texture
+		if (pixels->filter == 0) {
+			// No filtering.
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		}
+		else if (pixels->filter == 1) {
+			// Linear filtering.
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		}
+		else if (pixels->filter == 2) {
+			// Bilinear filtering.
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+			glGenerateMipmap(GL_TEXTURE_3D);
+		}
+		else if (pixels->filter == 3) {
+			// Trilinear filtering.
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glGenerateMipmap(GL_TEXTURE_3D);
+		}
+	}
+
+	*/
 	// 2D Texture (diffuse)
 	if (dim == 2) {
 		// setup first texture (the only one in this case)
