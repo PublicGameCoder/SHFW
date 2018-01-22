@@ -81,6 +81,14 @@ add_library(SHFW
 	SHFW/SHTime.cpp
 	SHFW/SHTime.h
 	SHFW/VectorT.h
+	SHFW/SHEventHandler.cpp
+	SHFW/SHEventHandler.h
+	SHFW/SHEventListener.cpp
+	SHFW/SHEventListener.h
+	SHFW/SHEvent.cpp
+	SHFW/SHEvent.h
+	SHFW/WindowResizeEvent.cpp
+	SHFW/WindowResizeEvent.h
 	SHFW/glad.c
 	SHFW/StandardAssets.h
 	SHFW/SHMath.h
@@ -98,6 +106,8 @@ IF(MAKE_WORKSPACE)
 		Workspace/main.cpp
 		Workspace/PreviewScene.cpp
 		Workspace/PreviewScene.h
+		Workspace/TargetTexture.cpp
+		Workspace/TargetTexture.h
 	)
 	target_link_libraries(Workspace
 		${ALL_GRAPHICS_LIBS}
