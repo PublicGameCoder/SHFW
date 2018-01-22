@@ -25,6 +25,7 @@ public:
 	Texture* getTexture(const std::string& filename, int filter, int wrap);
 
 	Mesh* getSpriteMesh(int width, int height, float pivotx, float pivoty, float uvwidth, float uvheight, int circle, int which);
+	Mesh* getCubeMesh(int width, int height, int depth, float pivotx, float pivoty, float pivotz, float uvwidth, float uvheight, int circle, int which);
 
 	Mesh* getLineMesh(Line* line);
 

@@ -136,6 +136,35 @@ Mesh* ResourceManager::getSpriteMesh(int width, int height, float pivotx, float 
 
 	return NULL;
 }
+Mesh* ResourceManager::getCubeMesh(int width, int height, int depth, float pivotx, float pivoty, float pivotz, float uvwidth, float uvheight, int circle, int which)
+{
+	char buf[64]; // should be big enough: "1024x1024_0.50000x0.50000_1.00000x1.00000_0_60"
+				  //sprintf(buf, "%dx%d_%.5fx%.5f_%.5fx%.5f_%d_%d", width, height, pivotx, pivoty, uvwidth, uvheight, circle, which);
+	std::string meshname(buf);
+
+	if (_meshes[meshname] != NULL) {
+		return _meshes[meshname];
+	}
+	else {
+		Mesh* m = new Mesh();
+		if (circle != 0) {
+			if (which >= 0) {
+				m->generateSegmentMesh(width / 2, circle, which);
+			}
+			else {
+				m->generateCircleMesh(width / 2, circle, uvwidth, uvheight);
+			}
+		}
+		else {
+			m->generateCubeMesh(width, height, depth, pivotx, pivoty, pivotx, uvwidth, uvheight);
+		}
+		_meshes[meshname] = m;
+
+		return m;
+	}
+
+	return NULL;
+}
 
 
 Mesh* ResourceManager::getLineMesh(Line* line)
