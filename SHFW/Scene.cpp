@@ -31,10 +31,10 @@ void Scene::_updateEntity(Entity* entity)
 
 	// update all children
 	std::vector<Entity*> children = entity->children();
-	std::vector<Entity*>::iterator child = children.begin();
+	std::vector<Entity*>::iterator childIt = children.begin();
 
-	while (child < children.end()) {
-		this->_updateEntity(*child);
-		++child;
+	while (childIt < children.end()) {
+		this->_updateEntity(*childIt);
+		++childIt;
 	}
 }
