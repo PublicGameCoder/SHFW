@@ -10,7 +10,13 @@ Camera::Camera()
 	_up = glm::vec3(0, 1, 0);
 	_right = glm::vec3(1, 0, 0);
 
-	this->orthogonal();
+	if (USE3D) {
+		this->perspective();
+	}
+	else {
+		this->orthogonal();
+	}
+	
 }
 
 Camera::~Camera()
