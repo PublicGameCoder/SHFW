@@ -3,7 +3,24 @@
 InputManager* InputManager::instance = NULL;
 
 InputManager::InputManager() {
+	currentWindow = NULL;
 
+	prevWindowWidth = 0;
+	prevWindowHeight = 0;
+
+	windowWidth = 0;
+	windowHeight = 0;
+
+	for (unsigned int i = 0; i<GLFW_KEY_LAST; i++) {
+		PressedKeys[i] = false;
+		KeysUp[i] = false;
+		KeysDown[i] = false;
+	}
+	for (unsigned int i = 0; i<GLFW_MOUSE_BUTTON_LAST; i++) {
+		mouse[i] = false;
+		mouseUp[i] = false;
+		mouseDown[i] = false;
+	}
 }
 
 InputManager::~InputManager() {
@@ -17,13 +34,18 @@ InputManager* InputManager::getManager(void) {
 	return InputManager::instance;
 }
 
-
 void InputManager::update(GLFWwindow* w) {
 	currentWindow = w;
 
 	glfwPollEvents();
 
 	glfwGetWindowSize(this->currentWindow, &windowWidth, &windowHeight);
+
+	if (prevWindowWidth != windowWidth || prevWindowHeight != windowHeight) {
+		EventHandler::getManager()->call(WindowResizeEvent(currentWindow, windowWidth, windowHeight));
+		prevWindowWidth = windowWidth;
+		prevWindowHeight = windowHeight;
+	}
 
 	glfwGetCursorPos(this->currentWindow, &mouseX, &mouseY);
 

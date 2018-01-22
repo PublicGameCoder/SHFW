@@ -2,6 +2,8 @@
 #define INPUTMANAGER_H
 
 #include <glfw3.h>
+#include "SHEventHandler.h"
+
 enum KeyCode;
 class InputManager {
 public:
@@ -35,6 +37,10 @@ public:
 	double getMouseX() { return mouseX; }
 	double getMouseY() { return mouseY; }
 
+	GLFWwindow* getWindow() {
+		return currentWindow;
+	}
+
 private:
 	static InputManager* instance;
 
@@ -49,6 +55,9 @@ private:
 
 	double mouseX;
 	double mouseY;
+
+	int prevWindowWidth;
+	int prevWindowHeight;
 
 	int windowWidth;
 	int windowHeight;
