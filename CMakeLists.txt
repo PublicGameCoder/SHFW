@@ -13,6 +13,7 @@ include_directories(
 	${CMAKE_SOURCE_DIR}/extLibs/glm-0.9.8.4
 	${CMAKE_SOURCE_DIR}/extLibs/SOIL2/${HEADERS}
 	${CMAKE_SOURCE_DIR}/extLibs
+	
 	${CMAKE_SOURCE_DIR}/SHFW
 	${CMAKE_SOURCE_DIR}/.
 )

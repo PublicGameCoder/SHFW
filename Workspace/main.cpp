@@ -18,10 +18,6 @@ int main()
 	obj->position.x += 200;
 	obj->position.y += 200;
 
-	obj->scale.x = 0.5;
-	obj->scale.y = 0.5;
-	obj->scale.z = 0.5;
-
 	while (scene->isRunning())
 	{
 		core.run(scene);
@@ -32,9 +28,11 @@ int main()
 			scene->camera()->position.y += 200 * Time::deltaTime;
 		}
 		if (InputManager::getManager()->getKey(Right)) {
+			//scene->camera()->position.x += 200 * Time::deltaTime;
 			scene->camera()->position.x += 200 * Time::deltaTime;
 		}
 		if (InputManager::getManager()->getKey(Left)) {
+			//scene->camera()->position.x -= 200 * Time::deltaTime;
 			scene->camera()->position.x -= 200 * Time::deltaTime;
 		}
 		static double prevMouseX = 0;
