@@ -4,9 +4,7 @@
 class EventListener;
 
 #include <map>
-
-#include "SHEvent.h"
-#include "WindowResizeEvent.h"
+#include "SHEvents.h"
 #include <functional>
 #include <iostream>
 
@@ -20,10 +18,10 @@ public:
 	}
 	EventHandler();
 	virtual ~EventHandler();
-	void addNewListener(std::function<void(WindowResizeEvent)> functionListener, EventType eventType);
-	void call(WindowResizeEvent e);
+	//void addNewListener(std::function<void(Event)> functionListener, EventType eventType);
+	void call(Event e);
 private:
 	static EventHandler* instance;
-	std::map<EventType, std::function<void(WindowResizeEvent)>> _listeners;
+	std::map<EventType, std::function<void(Event)>> _listeners;
 };
 #endif // !SHEVENTHANDLER_H

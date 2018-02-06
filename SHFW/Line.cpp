@@ -12,7 +12,7 @@ Line::Line()
 	_closed = false;
 
 	char buf[12];
-	//sprintf(buf, "line%d", _guid);
+	sprintf(buf, "line%d", _guid);
 	std::string linename(buf);
 
 	_filename = linename;

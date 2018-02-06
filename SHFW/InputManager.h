@@ -2,6 +2,8 @@
 #define INPUTMANAGER_H
 
 #include <glfw3.h>
+#include <map>
+#include <vector>
 #include "SHEventHandler.h"
 
 enum KeyCode;
@@ -37,9 +39,19 @@ public:
 	double getMouseX() { return mouseX; }
 	double getMouseY() { return mouseY; }
 
+	int getScrollVertical(GLFWwindow* window) { return (verticalScrolls.find(window) != verticalScrolls.end())?verticalScrolls.find(window)->second : 0; }
+	int getScrollHorizontal(GLFWwindow* window) { return (horizontalScrolls.find(window) != horizontalScrolls.end()) ? horizontalScrolls.find(window)->second : 0; }
+	int getScrollVerticalContinued(GLFWwindow* window) { return (continuedVerticalScrolls.find(window) != continuedVerticalScrolls.end()) ? continuedVerticalScrolls.find(window)->second : 0; }
+	int getScrollHorizontalContinued(GLFWwindow* window) { return (continuedHorizontalScrolls.find(window) != continuedHorizontalScrolls.end()) ? continuedHorizontalScrolls.find(window)->second : 0; }
+
+	void resetScrollVertical(GLFWwindow* window) { continuedVerticalScrolls.find(window)->second = 0; }
+	void resetScrollHorizontal(GLFWwindow* window) { continuedHorizontalScrolls.find(window)->second = 0; }
+
 	GLFWwindow* getWindow() {
 		return currentWindow;
 	}
+
+	void InputManager::scrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 
 private:
 	static InputManager* instance;
@@ -61,6 +73,17 @@ private:
 
 	int windowWidth;
 	int windowHeight;
+
+	void preprocessWindow(GLFWwindow* window);
+	std::vector<GLFWwindow*> monitoredWindows;
+
+	//Latest scroll direction
+	std::map<GLFWwindow*,int> verticalScrolls;
+	//Total Amount of scrolls from reset
+	std::map<GLFWwindow*,int> continuedVerticalScrolls;
+	
+	std::map<GLFWwindow*,int> horizontalScrolls;
+	std::map<GLFWwindow*,int> continuedHorizontalScrolls;
 
 	void processKey(unsigned int key);
 	void processButton(unsigned int button);

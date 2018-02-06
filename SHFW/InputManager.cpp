@@ -2,6 +2,10 @@
 
 InputManager* InputManager::instance = NULL;
 
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset) {
+	InputManager::getManager()->scrollCallback(window, xoffset, yoffset);
+}
+
 InputManager::InputManager() {
 	currentWindow = NULL;
 
@@ -34,8 +38,20 @@ InputManager* InputManager::getManager(void) {
 	return InputManager::instance;
 }
 
+void InputManager::preprocessWindow(GLFWwindow* window) {
+	if (std::find(monitoredWindows.begin(), monitoredWindows.end(), window) == monitoredWindows.end()) {
+		//When window isn't monitored.
+
+		glfwSetScrollCallback(window, scroll_callback);
+
+		monitoredWindows.push_back(window);
+	}
+}
+
 void InputManager::update(GLFWwindow* w) {
 	currentWindow = w;
+
+	preprocessWindow(w);
 
 	glfwPollEvents();
 
@@ -108,4 +124,36 @@ void InputManager::processButton(unsigned int button) {
 			mouseUp[button] = false;
 		}
 	}
+}
+
+void InputManager::scrollCallback(GLFWwindow* window, double xoffset, double yoffset) {
+	if (horizontalScrolls.find(window) == horizontalScrolls.end()) {
+		horizontalScrolls.insert(std::pair<GLFWwindow*, int>(window, (xoffset > 0) ? 1 : -1));
+	}
+	else {
+		horizontalScrolls.find(window)->second = (xoffset > 0) ? 1 : -1;
+	}
+
+	if (verticalScrolls.find(window) == verticalScrolls.end()) {
+		verticalScrolls.insert(std::pair<GLFWwindow*, int>(window, (yoffset > 0) ? 1 : -1));
+	}
+	else {
+		verticalScrolls.find(window)->second = (yoffset > 0) ? 1 : -1;
+	}
+
+	if (continuedHorizontalScrolls.find(window) == continuedHorizontalScrolls.end()) {
+		continuedHorizontalScrolls.insert(std::pair<GLFWwindow*, int>(window, (xoffset > 0) ? 1 : -1));
+	}
+	else {
+		continuedHorizontalScrolls.find(window)->second += (xoffset > 0) ? 1 : -1;
+	}
+
+	if (continuedVerticalScrolls.find(window) == continuedVerticalScrolls.end()) {
+		continuedVerticalScrolls.insert(std::pair<GLFWwindow*, int>(window, (yoffset > 0) ? 1 : -1));
+	}
+	else {
+		continuedVerticalScrolls.find(window)->second += (yoffset > 0) ? 1 : -1;
+	}
+
+	EventHandler::getManager()->call(ScrollEvent(window, horizontalScrolls.find(window)->second, verticalScrolls.find(window)->second, continuedHorizontalScrolls.find(window)->second, continuedVerticalScrolls.find(window)->second));
 }

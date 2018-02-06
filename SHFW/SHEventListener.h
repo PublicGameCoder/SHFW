@@ -3,8 +3,7 @@
 
 class EventHandler;
 
-#include "SHEvent.h"
-#include "WindowResizeEvent.h"
+#include "SHEvents.h"
 #include <functional>
 #include <iostream>
 
@@ -13,7 +12,7 @@ public:
 	EventListener();
 	virtual ~EventListener();
 protected:
-	void registerEvents(std::function<void(WindowResizeEvent)> const &functionListener, EventType eventType);
+	//void registerEvents(std::function<void(Event)>&& functionListener, EventType eventType);
 private:
 	EventHandler* _handler;
 };

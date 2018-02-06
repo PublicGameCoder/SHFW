@@ -2,7 +2,7 @@
 
 TargetTexture::TargetTexture()
 {
-	this->registerEvents(std::bind(&TargetTexture::resizeTest, this, std::placeholders::_1), EventType::EnumWindowResizeEvent);
+	//this->registerEvents(std::bind(TargetTexture::resizeTest, this, std::placeholders::_1), EventType::EnumWindowResizeEvent);
 }
 
 TargetTexture::~TargetTexture()

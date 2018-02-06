@@ -8,7 +8,7 @@
 	EventListener::~EventListener() {
 
 	}
-
-	void EventListener::registerEvents(std::function<void(WindowResizeEvent)> const &functionListener, EventType eventType) {
+	/*
+	void EventListener::registerEvents(std::function<void(Event)>&& functionListener, EventType eventType) {
 		_handler->addNewListener(functionListener, eventType);
-	}
+	}*/

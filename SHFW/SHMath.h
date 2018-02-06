@@ -43,14 +43,16 @@ public:
 		Vector3 P1 = quadraticCurve(b, c, d, p);
 		return lerp(P0, P1, p);
 	}
-	//closestPointNearPointBetweenTwoPoints
-	static Vector3 cPNPBTP(Vector3 point, Vector3 a, Vector3 b) {
+	/*FindClosestPoint
+	finds the point on a line between point A and B that is closest to the target.
+	**/
+	static Vector3 findClosestPoint(Vector3 target, Vector3 a, Vector3 b) {
 		float p = 0.0f;
 		Vector3 closestPoint = lerp(a, b, p);
-		float closestdist = closestPoint.distance(point);
+		float closestdist = closestPoint.distance(target);
 		do {
 			Vector3 pointOnLine = lerp(a, b, p);
-			float dist = pointOnLine.distance(point);
+			float dist = pointOnLine.distance(target);
 			if (dist < closestdist) {
 				closestdist = dist;
 				closestPoint = pointOnLine;

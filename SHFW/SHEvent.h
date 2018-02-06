@@ -3,7 +3,8 @@
 
 enum EventType {
 	UNKNOWN,
-	EnumWindowResizeEvent
+	EnumWindowResizeEvent,
+	EnumScrollEvent
 };
 
 class Event {

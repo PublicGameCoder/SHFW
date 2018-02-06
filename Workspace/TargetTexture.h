@@ -10,7 +10,7 @@ public:
 	TargetTexture();
 	virtual ~TargetTexture();
 
-	void resizeTest(WindowResizeEvent e);
+	static void resizeTest(WindowResizeEvent e);
 private:
 
 };
