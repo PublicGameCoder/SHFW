@@ -18,10 +18,10 @@ public:
 	}
 	EventHandler();
 	virtual ~EventHandler();
-	//void addNewListener(std::function<void(Event)> functionListener, EventType eventType);
-	void call(Event e);
+	void addNewListener(void(*functionListener)(), EventType eventType);
+	void call(Event &e);
 private:
 	static EventHandler* instance;
-	std::map<EventType, std::function<void(Event)>> _listeners;
+	std::map<EventType, void(*)()> _listeners;
 };
 #endif // !SHEVENTHANDLER_H

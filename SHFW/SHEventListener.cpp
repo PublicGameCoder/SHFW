@@ -8,7 +8,6 @@
 	EventListener::~EventListener() {
 
 	}
-	/*
-	void EventListener::registerEvents(std::function<void(Event)>&& functionListener, EventType eventType) {
+	void EventListener::registerEvents(void(*functionListener)(), EventType eventType) {
 		_handler->addNewListener(functionListener, eventType);
-	}*/
+	}

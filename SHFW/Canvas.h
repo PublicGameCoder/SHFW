@@ -134,7 +134,7 @@ class Canvas: public Entity
 
 		virtual ~Canvas();
 
-		virtual void update(float deltaTime);
+		virtual void update();
 
 		void init(int pixelsize);
 

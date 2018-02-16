@@ -13,7 +13,7 @@ public:
 	virtual ~Text();
 
 	/// @brief empty update function
-	virtual void update(float deltaTime) { };
+	virtual void update() { };
 
 	/// @brief clears all Sprites for characters
 	/// @return void

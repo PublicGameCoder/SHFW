@@ -12,7 +12,7 @@ public:
 	EventListener();
 	virtual ~EventListener();
 protected:
-	//void registerEvents(std::function<void(Event)>&& functionListener, EventType eventType);
+	void registerEvents(void(*functionListener)(), EventType eventType);
 private:
 	EventHandler* _handler;
 };

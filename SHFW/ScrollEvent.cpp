@@ -1,6 +1,6 @@
 #include "ScrollEvent.h"
 
-ScrollEvent::ScrollEvent(GLFWwindow* window, double xOffset, double yOffset, double xTotal, double yTotal) : Event() {
+ScrollEvent::ScrollEvent(GLFWwindow* window, double xOffset, double yOffset, double xTotal, double yTotal) : Event(this) {
 	_window = window;
 	_xOffset = xOffset;
 	_yOffset = yOffset;

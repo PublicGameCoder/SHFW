@@ -9,7 +9,6 @@
 #include "SHTime.h"
 #include "Renderer.h"
 #include "InputManager.h"
-#include "Entity.h"
 #include "Scene.h"
 
 class Core

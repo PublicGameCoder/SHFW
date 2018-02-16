@@ -11,6 +11,7 @@ public:
 	virtual ~TargetTexture();
 
 	static void resizeTest(WindowResizeEvent e);
+	static void scrollTest(ScrollEvent e);
 private:
 
 };

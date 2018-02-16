@@ -17,7 +17,7 @@ Canvas::~Canvas()
 
 }
 
-void Canvas::update(float deltaTime)
+void Canvas::update()
 {
 
 }

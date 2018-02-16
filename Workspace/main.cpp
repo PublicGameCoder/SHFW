@@ -31,24 +31,6 @@ int main()
 
 	scene->addChild(l);
 
-	int maxPt = 65;
-
-	int mediumPt = 32;
-	
-	for (int i = 1; i <= 10; i++) {
-		int b,c;
-		if (i <= 5) {
-			b = Math::map(i-1, 0, 5, 0, mediumPt) + 1;
-			c = Math::map(i, 0, 5, 0, mediumPt);
-		}
-		else {
-			b = Math::map(i-1, 5, 10, mediumPt, maxPt) + 1;
-			c = Math::map(i, 5, 10, mediumPt, maxPt);
-		}
-		std::cout << i << " = " << b << " - " << c << std::endl;
-	}
-
-
 	while (scene->isRunning())
 	{
 		core.run(scene);
@@ -81,13 +63,13 @@ int main()
 
 		static float pp = 0;
 		if (InputManager::getManager()->getKey(KeyCode::Period)) {
-			pp += 10 * Time::deltaTime;
+			pp += 100 * Time::deltaTime;
 		}
 		if (InputManager::getManager()->getKey(KeyCode::Comma)) {
-			pp -= 10 * Time::deltaTime;
+			pp -= 100 * Time::deltaTime;
 		}
 		static float p;
-		p = cos(pp) * 100;
+		p = pp;
 		p = Math::map(p, 0, 100, 0, 1);
 		p = Math::constrain(p, 0, 1);
 		obj->position = Math::lerp(pos1, pos2, p);
