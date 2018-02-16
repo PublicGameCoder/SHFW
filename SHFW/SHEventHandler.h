@@ -18,8 +18,8 @@ public:
 	}
 	EventHandler();
 	virtual ~EventHandler();
-	void addNewListener(void(*functionListener)(), EventType eventType);
-	void call(Event &e);
+	//void addNewListener(void(*functionListener)(), EventType eventType);
+	//void call(Event &e);
 private:
 	static EventHandler* instance;
 	std::map<EventType, void(*)()> _listeners;

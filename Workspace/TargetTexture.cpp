@@ -2,8 +2,8 @@
 
 TargetTexture::TargetTexture()
 {
-	this->registerEvents((void(*)())TargetTexture::resizeTest, EventType::EnumWindowResizeEvent);
-	this->registerEvents((void(*)())TargetTexture::scrollTest, EventType::EnumScrollEvent);
+	//this->registerEvents((void(*)())TargetTexture::resizeTest, EventType::EnumWindowResizeEvent);
+	//this->registerEvents((void(*)())TargetTexture::scrollTest, EventType::EnumScrollEvent);
 }
 
 TargetTexture::~TargetTexture()

@@ -11,6 +11,7 @@ EventHandler::~EventHandler() {
 
 }
 
+/*
 void EventHandler::addNewListener(void(*functionListener)(), EventType eventType) {
 	std::pair<EventType, void(*)()> entry1 = std::pair<EventType, void(*)()>(eventType, functionListener);
 	this->_listeners.insert(entry1);
@@ -30,4 +31,4 @@ void EventHandler::call(Event &e) {
 		}
 		++it;
 	}
-}
+}*/

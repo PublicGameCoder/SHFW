@@ -12,7 +12,7 @@ public:
 	EventListener();
 	virtual ~EventListener();
 protected:
-	void registerEvents(void(*functionListener)(), EventType eventType);
+	//void registerEvents(void(*functionListener)(), EventType eventType);
 private:
 	EventHandler* _handler;
 };

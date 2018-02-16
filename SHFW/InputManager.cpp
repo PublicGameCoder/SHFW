@@ -57,11 +57,12 @@ void InputManager::update(GLFWwindow* w) {
 
 	glfwGetWindowSize(this->currentWindow, &windowWidth, &windowHeight);
 
+	/*
 	if (prevWindowWidth != windowWidth || prevWindowHeight != windowHeight) {
 		EventHandler::getManager()->call(WindowResizeEvent(currentWindow, windowWidth, windowHeight));
 		prevWindowWidth = windowWidth;
 		prevWindowHeight = windowHeight;
-	}
+	}*/
 
 	glfwGetCursorPos(this->currentWindow, &mouseX, &mouseY);
 
@@ -155,5 +156,5 @@ void InputManager::scrollCallback(GLFWwindow* window, double xoffset, double yof
 		continuedVerticalScrolls.find(window)->second += (yoffset > 0) ? 1 : -1;
 	}
 
-	EventHandler::getManager()->call(ScrollEvent(window, horizontalScrolls.find(window)->second, verticalScrolls.find(window)->second, continuedHorizontalScrolls.find(window)->second, continuedVerticalScrolls.find(window)->second));
+	//EventHandler::getManager()->call(ScrollEvent(window, horizontalScrolls.find(window)->second, verticalScrolls.find(window)->second, continuedHorizontalScrolls.find(window)->second, continuedVerticalScrolls.find(window)->second));
 }

@@ -12,9 +12,7 @@ enum EventType {
 class Event {
 public:
 
-	template <class T>
-	Event(T* data) {
-		_data = data;
+	Event() {
 		_type = EventType::UNKNOWN;
 	}
 
@@ -25,15 +23,6 @@ public:
 	EventType getType() {
 		return _type;
 	}
-
-	template <class T>
-	const T getData() const {
-		return _data;
-	}
-
-	template <class T>
-	T Event::_data = NULL;
-
 
 protected:
 	EventType _type;

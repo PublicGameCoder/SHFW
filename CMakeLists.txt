@@ -82,17 +82,17 @@ add_library(SHFW
 	SHFW/SHTime.cpp
 	SHFW/SHTime.h
 	SHFW/VectorT.h
-#	SHFW/SHEvents.h
-#	SHFW/SHEventHandler.cpp
-#	SHFW/SHEventHandler.h
-#	SHFW/SHEventListener.cpp
-#	SHFW/SHEventListener.h
-#	SHFW/SHEvent.cpp
-#	SHFW/SHEvent.h
-#	SHFW/WindowResizeEvent.cpp
-#	SHFW/WindowResizeEvent.h
-#	SHFW/ScrollEvent.cpp
-#	SHFW/ScrollEvent.h
+	SHFW/SHEvents.h
+	SHFW/SHEventHandler.cpp
+	SHFW/SHEventHandler.h
+	SHFW/SHEventListener.cpp
+	SHFW/SHEventListener.h
+	SHFW/SHEvent.cpp
+	SHFW/SHEvent.h
+	SHFW/WindowResizeEvent.cpp
+	SHFW/WindowResizeEvent.h
+	SHFW/ScrollEvent.cpp
+	SHFW/ScrollEvent.h
 	SHFW/glad.c
 	SHFW/StandardAssets.h
 	SHFW/SHMath.h
